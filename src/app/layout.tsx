@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Inter } from "next/font/google";
 import { Container } from "react-bootstrap";
 import { ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css'
+import "react-toastify/dist/ReactToastify.css";
 import AppFooter from "~/components/app.footer";
 import AppHeader from "~/components/app.header";
 const inter = Inter({ subsets: ["latin"] });
@@ -23,10 +23,12 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <AppHeader />
-        <Container>{children}</Container>
+        <Container style={{ minHeight: "calc(100vh-106px)" }}>
+          {children}
+        </Container>
 
         <AppFooter />
-        <ToastContainer/>
+        <ToastContainer />
       </body>
     </html>
   );
