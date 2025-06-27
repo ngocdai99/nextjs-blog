@@ -4,10 +4,13 @@ import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 import CreateModal from "./modal/create.modal";
 import UpdateModal from "./modal/update.modal";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 type TableProp = {
   blogs: Blog[];
 };
 const AppTable: React.FC<TableProp> = ({ blogs }) => {
+  const router = useRouter();
   const [showCreate, setShowCreate] = useState<boolean>(false);
   const [showUpdate, setShowUpdate] = useState<boolean>(false);
   const [selectedBlog, setSelectedBlog] = useState<Blog | null>(null);
@@ -45,7 +48,13 @@ const AppTable: React.FC<TableProp> = ({ blogs }) => {
                 <td>{blog.title}</td>
                 <td>{blog.author}</td>
                 <td>
-                  <Button>View</Button>
+                  <Button
+                    onClick={() => {
+                      router.push(`/blogs/${blog.id}`);
+                    }}
+                  >
+                    View
+                  </Button>
                   <Button
                     onClick={() => handleOpenUpdate(blog)}
                     variant="warning"
