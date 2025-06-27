@@ -6,6 +6,8 @@ import CreateModal from "./modal/create.modal";
 import UpdateModal from "./modal/update.modal";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
+import { mutate } from "swr";
 type TableProp = {
   blogs: Blog[];
 };
@@ -18,6 +20,25 @@ const AppTable: React.FC<TableProp> = ({ blogs }) => {
   const handleOpenUpdate = (blog: Blog) => {
     setSelectedBlog(blog);
     setShowUpdate(true);
+  };
+
+  const handleDelete = (blog: Blog) => {
+    if (confirm(`Bạn chắc chắn muốn xóa blog: ${blog.title}`) == true) {
+      fetch(`http://localhost:8000/blogs/${blog.id}`, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        method: "DELETE",
+      })
+        .then(function (res) {
+          toast.success("Delete success");
+          mutate("http://localhost:8000/blogs");
+        })
+        .catch(function (res) {
+          toast.warning("Delete failed");
+        });
+    }
   };
 
   return (
@@ -62,7 +83,9 @@ const AppTable: React.FC<TableProp> = ({ blogs }) => {
                   >
                     Edit
                   </Button>
-                  <Button variant="danger">Delete</Button>
+                  <Button onClick={() => handleDelete(blog)} variant="danger">
+                    Delete
+                  </Button>
                 </td>
               </tr>
             );
