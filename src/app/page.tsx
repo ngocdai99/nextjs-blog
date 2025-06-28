@@ -1,6 +1,11 @@
-"use client";
-import Link from "next/link";
 
+import Link from "next/link";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: 'Home Page',
+  description: 'Description bla blah'
+}
 export default function Home() {
   return (
     <main>
